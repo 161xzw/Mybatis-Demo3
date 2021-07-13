@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.dao.UserMapper">
+    <select id="getUserList" resultType="com.xiao.pojo.User">
+        select * from user
+    </select>
+    <select id="getUserList1" resultMap="UserMap">
+        select id,name,pwd from user where id = #{id}
+    </select>
+    <resultMap id="UserMap" type="com.xiao.pojo.User1">
+        <id column="id" property="id"/>
+        <result  column="name" property="name"/>
+        <result column="pwd" property="passwd"/>
+    </resultMap>
+    <select id="getUserById" parameterType="int" resultType="com.xiao.pojo.User" >
+        select * from user where id = #{id}
+    </select>
+    <select id="getUserByNP" resultType="com.xiao.pojo.User">
+        select * from user where name=#{name} and pwd=#{pwd}
+    </select>
+    <select id="getUserLike" resultType="com.xiao.pojo.User">
+        select * from user where name like #{value}
+    </select>
+    <select id="selectUser" parameterType="Map" resultType="com.xiao.pojo.User">
+        select * from user limit #{startIndex},#{endIndex}
+    </select>
+
+    <insert id="addUser" parameterType="com.xiao.pojo.User" >
+        insert into user (id,name,pwd) value (#{id},#{name},#{pwd})
+     </insert>
+    <update id="updateUser" parameterType="com.xiao.pojo.User">
+        update user set name=#{name},pwd=#{pwd} where id=#{id}
+    </update>
+    <delete id="deleteUserById" parameterType="int">
+        delete from user where id=#{id}
+    </delete>
+    <update id="updateUser1" parameterType="map">
+        update user set name=#{name} where id=#{id}
+    </update>
+</mapper>
